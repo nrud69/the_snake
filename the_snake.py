@@ -1,4 +1,4 @@
-from random import choice, randint
+from random import randint
 
 import pygame
 
@@ -29,6 +29,8 @@ SNAKE_COLOR = (0, 255, 0)
 # Скорость движения змейки:
 SPEED = 10
 
+CENTER = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
 # Настройка игрового окна:
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
@@ -42,7 +44,7 @@ clock = pygame.time.Clock()
 # Тут опишите все классы игры.
 class GameObject:
     
-    def __init__(self, position=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), body_color=None):
+    def __init__(self, position=CENTER, body_color=None):
         self.position = position
         self.body_color = body_color
         
@@ -143,6 +145,7 @@ def handle_keys(game_object):
                 game_object.next_direction = LEFT
             elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
                 game_object.next_direction = RIGHT
+
            
 def main():
     # Инициализация PyGame:
