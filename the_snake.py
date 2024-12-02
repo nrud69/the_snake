@@ -43,27 +43,28 @@ clock = pygame.time.Clock()
 
 # Тут опишите все классы игры.
 class GameObject:
-
+    """Базовый класс"""
     def __init__(self, position=CENTER, body_color=None):
         self.position = position
         self.body_color = body_color
-
+    """Функция рисования"""
     def draw():
         pass
 
 
 class Apple(GameObject):
+    """Класс яблока"""
     def __init__(self):
         super().__init__()
         self.randomize_position()
         self.body_color = APPLE_COLOR
-
+    """Радомное расположение яблока"""
     def randomize_position(self):
         self.position = (
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
             randint(0, GRID_HEIGHT - 1) * GRID_SIZE,
         )
-
+    """Рисование яблока"""
     def draw(self):
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
@@ -71,6 +72,7 @@ class Apple(GameObject):
 
 
 class Snake(GameObject):
+    """Класс змеи"""
     def __init__(self):
         super().__init__()
         self.positions = [self.position]
@@ -78,12 +80,12 @@ class Snake(GameObject):
         self.direction = RIGHT
         self.next_direction = None
         self.body_color = SNAKE_COLOR
-
+    """Обновление направления"""
     def update_direction(self):
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
-
+    """Рисование змейки"""
     def draw(self):
         for position in self.positions[:-1]:
             rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
@@ -98,10 +100,10 @@ class Snake(GameObject):
         if self.last:
             last_rect = pygame.Rect(self.last, (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
-
+    """Получение головы"""
     def get_head_position(self):
         return self.positions[0]
-
+    """Движение змейки"""
     def move(self):
         if self.next_direction:
             self.direction = self.next_direction
@@ -123,7 +125,7 @@ class Snake(GameObject):
             self.last = self.positions.pop()
         else:
             self.last = None
-
+    """Обновление результатов"""
     def reset(self):
         self.positions = [self.position]
         self.length = 1
