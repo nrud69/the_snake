@@ -43,11 +43,11 @@ clock = pygame.time.Clock()
 
 # Тут опишите все классы игры.
 class GameObject:
-    
+
     def __init__(self, position=CENTER, body_color=None):
         self.position = position
         self.body_color = body_color
-        
+
     def draw():
         pass
 
@@ -56,14 +56,14 @@ class Apple(GameObject):
     def __init__(self):
         super().__init__()
         self.randomize_position()
-        self.body_color = APPLE_COLOR 
-        
+        self.body_color = APPLE_COLOR
+
     def randomize_position(self):
         self.position = (
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
             randint(0, GRID_HEIGHT - 1) * GRID_SIZE,
         )
-          
+
     def draw(self):
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
@@ -73,17 +73,17 @@ class Apple(GameObject):
 class Snake(GameObject):
     def __init__(self):
         super().__init__()
-        self.positions = [self.position] 
+        self.positions = [self.position]
         self.length = 1
         self.direction = RIGHT
         self.next_direction = None
-        self.body_color = SNAKE_COLOR 
-        
+        self.body_color = SNAKE_COLOR
+
     def update_direction(self):
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
-            
+
     def draw(self):
         for position in self.positions[:-1]:
             rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
@@ -98,10 +98,10 @@ class Snake(GameObject):
         if self.last:
             last_rect = pygame.Rect(self.last, (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
-            
+
     def get_head_position(self):
         return self.positions[0]
-    
+
     def move(self):
         if self.next_direction:
             self.direction = self.next_direction
@@ -123,13 +123,13 @@ class Snake(GameObject):
             self.last = self.positions.pop()
         else:
             self.last = None
-            
+
     def reset(self):
         self.positions = [self.position]
         self.length = 1
         self.direction = RIGHT
         self.next_direction = None
-    
+
 
 def handle_keys(game_object):
     for event in pygame.event.get():
@@ -146,7 +146,7 @@ def handle_keys(game_object):
             elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
                 game_object.next_direction = RIGHT
 
-           
+
 def main():
     # Инициализация PyGame:
     pygame.init()
